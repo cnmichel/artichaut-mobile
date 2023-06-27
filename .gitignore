@@ -1,6 +1,7 @@
 .idea/
 .ideas/
 .vscode/
+.yarn/
 node_modules/
 .expo/
 dist/
