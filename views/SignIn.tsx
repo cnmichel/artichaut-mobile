@@ -6,14 +6,38 @@ import { Divider } from "@ui-kitten/components";
 export const SignIn = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [apiResponse, setApiResponse] = useState<any>(null); // État pour stocker la réponse de l'API
 
   const handleLogin = () => {
-    //  logique de SignIn ici
-    console.log("Email:", email);
-    console.log("Mot de passe:", password);
+    // Simulation de réponse de l'API pour la connexion
+    const mockApiResponse = [
+      {
+        status: false,
+        message: "validation error",
+        errors: {
+          email: ["The email has already been taken."],
+        },
+      },
+      {
+        status: true,
+        message: "User Created Successfully",
+        token: "8|9Gkue3qabi9ekHXoER0alGW0whezRwZCggC44QoP",
+      },
+    ];
 
-    // Changer le state 'isLogged' dans le parent en appelant la fonction setIsLogged
-    navigation.setParams({ isLogged: true }); // Appeler setIsLogged avec la valeur true
+    // Logique de vérification des identifiants
+    const user = mockApiResponse.find(
+      (item) => item.status === true && item.token !== undefined
+    );
+
+    if (user) {
+      // Connexion réussie
+      setApiResponse(user); // Stocker la réponse de l'API dans l'état
+      navigation.setParams({ isLogged: true }); // Changer le state 'isLogged' dans le composant parent
+    } else {
+      // Connexion échouée
+      setApiResponse(mockApiResponse[0]); // Stocker la réponse de l'API dans l'état
+    }
   };
 
   return (
@@ -62,6 +86,10 @@ export const SignIn = ({ navigation }: { navigation: any }) => {
           >
             <Text style={styles.signupButtonText}>S'inscrire</Text>
           </TouchableOpacity>
+
+          {apiResponse && !apiResponse.status && (
+            <Text style={styles.error}>{apiResponse.message}</Text>
+          )}
         </View>
       </View>
     </View>

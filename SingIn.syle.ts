@@ -87,4 +87,9 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
   },
+  error: {
+    color: "red", // Ajout de la propriété 'error' pour le style de texte d'erreur
+    marginBottom: 16,
+    textAlign: "center",
+  },
 });
