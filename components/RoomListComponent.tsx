@@ -32,17 +32,16 @@ const RoomListComponent = () => {
         <View style={styles.container}>
             {rooms.map((room, index) => (
                 <Card style={styles.card} key={index}>
-                    <Text style={styles.title}>{room.name}</Text>
+                    <Text style={styles.title}>{room.name} <Text style={styles.price}>{room.price}€/pers</Text></Text>
                     <Image 
                         source={{ uri: room.img }}
-                        style={{ width: 300, height: 200 }}
+                        style={styles.image}
                     />
-                    <Text>{room.description}</Text>
-                    <Text>{room.price}</Text>
+                    <Text style={styles.description}>{room.description}</Text>
                     {room.available > 0 ? (
-                        <Button status='success'>Reserver</Button>
+                        <Button style={styles.button} status='success'>Reserver</Button>
                     ) : (
-                        <Button status='danger'>Indisponible</Button>
+                        <Button style={styles.button} status='danger'>Indisponible</Button>
                     )}
                 </Card>
             ))}
@@ -58,12 +57,30 @@ const styles = StyleSheet.create({
     },
     card: {
         margin: 10,
-        padding: 10
+        padding: 10,
     },
     title: {
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
+        textTransform: 'uppercase',
+        marginBottom: 10,
+    },
+    price : {
+        textAlign: 'center',
+        fontSize: 10,
+    },
+    image: {
+        width: 300,
+        height: 200,
+        borderRadius: 10,
+    },
+    description: {
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    button: {
+        marginTop: 10,
     }
 });
 

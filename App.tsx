@@ -6,25 +6,25 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
-import ReservationView from './views/ReservationView';
-import { SignIn } from './views/SignIn';
-import { SignUp } from './views/SignUp';
+// import { SignIn } from './views/SignIn';
+// import { SignUp } from './views/SignUp';
 import { Home } from './views/Home';
 import { UserProfile } from './views/UserProfile';
 import { Reservation } from './views/Reservation';
+
 
 export default function App() {
 
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  const [isLogged, setIsLogged] = useState<boolean>(false)
+  const [isLogged, setIsLogged] = useState<boolean>(true)
 
   return (
     <NavigationContainer>
       <ApplicationProvider {...eva} theme={eva.light}>
         { isLogged ?
-          <Tab.Navigator>
+          <Tab.Navigator lazy={false}>
             <Tab.Screen name="Accueil"
                         component={Home}
                         options={{ tabBarIcon: ({ color, size }) => (
@@ -40,12 +40,11 @@ export default function App() {
           </Tab.Navigator>
           :
           <Stack.Navigator>
-            <Stack.Screen name="Connexion" component={SignIn} options={{ headerShown: false }}/>
-            <Stack.Screen name="Inscription" component={SignUp} options={{ headerShown: false }}/>
+            {/* <Stack.Screen name="Connexion" component={SignIn} options={{ headerShown: false }}/>
+            <Stack.Screen name="Inscription" component={SignUp} options={{ headerShown: false }}/> */}
           </Stack.Navigator>
         }
         <StatusBar style="auto" />
-        <ReservationView />
       </ApplicationProvider>
     </NavigationContainer>
   );
