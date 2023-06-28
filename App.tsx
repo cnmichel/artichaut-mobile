@@ -1,26 +1,52 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ApplicationProvider } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import ReservationView from './views/ReservationView';
+import { SignIn } from './views/SignIn';
+import { SignUp } from './views/SignUp';
+import { Home } from './views/Home';
+import { UserProfile } from './views/UserProfile';
+import { Reservation } from './views/Reservation';
 
 export default function App() {
+
+  const Stack = createNativeStackNavigator();
+  const Tab = createBottomTabNavigator();
+
+  const [isLogged, setIsLogged] = useState<boolean>(false)
+
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
       <ApplicationProvider {...eva} theme={eva.light}>
-        <Text>Open up App.js to start working on your app!</Text>
+        { isLogged ?
+          <Tab.Navigator>
+            <Tab.Screen name="Accueil"
+                        component={Home}
+                        options={{ tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="home-outline" size={size} color={color}/>) }}/>
+            <Tab.Screen name="Réservations"
+                        component={Reservation}
+                        options={{ tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="bed-outline" size={size} color={color}/>) }}/>
+            <Tab.Screen name="Mon Compte"
+                        component={UserProfile}
+                        options={{ tabBarIcon: ({ color, size }) => (
+                            <Ionicons name="person-outline" size={size} color={color}/>) }}/>
+          </Tab.Navigator>
+          :
+          <Stack.Navigator>
+            <Stack.Screen name="Connexion" component={SignIn} options={{ headerShown: false }}/>
+            <Stack.Screen name="Inscription" component={SignUp} options={{ headerShown: false }}/>
+          </Stack.Navigator>
+        }
         <StatusBar style="auto" />
         <ReservationView />
       </ApplicationProvider>
-    </View>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
