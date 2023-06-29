@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { styles } from "../SingIn.syle";
 import { View, TouchableOpacity, Text, TextInput, ImageBackground } from "react-native";
 import { Divider } from "@ui-kitten/components";
+import Auth  from "../services/Auth";
+import Store from "../services/Store";
 
 export const SignIn = ({ navigation }: { navigation: any }) => {
+  const {saveItem, getItem} = Store()
+  const {login} = Auth() // Importation de la fonction login
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [apiResponse, setApiResponse] = useState<any>(null); // État pour stocker la réponse de l'API
@@ -11,38 +15,12 @@ export const SignIn = ({ navigation }: { navigation: any }) => {
 
 
   const handleLogin = () => {
-    // Simulation de réponse de l'API pour la connexion
-    const mockApiResponse = [
-      {
-        status: false,
-        message: "Email ou mot de passe incorect",
-        errors: {
-          email: ["The email has already been taken."],
-        },
-      },
-      {
-        status: true,
-        message: "Connexion réussi !",
-        token: "8|9Gkue3qabi9ekHXoER0alGW0whezRwZCggC44QoP",
-      },
-    ];
+  const user = {email, password} // prend en objet email et password
+  login(user).then((responseData)=>{ // Récupération des informations 
+    console.log(responseData)
+  })
 
-    // Logique de vérification des identifiants
-    if (email === "elrisitas@gmail.com" && password === "jedi") {
-      // Connexion réussie
-      const user = mockApiResponse[1];
-      setApiResponse(user); // Stocker la réponse de l'API dans l'état
-      navigation.setParams({ isLogged: true }); // Changer le state 'isLogged' dans le composant parent
-      const successResponse = mockApiResponse[1];
-      setApiResponse(successResponse); // Stocker la réponse de l'API dans l'état
-    } else {
-      // Connexion échouée
-      const errorResponse = mockApiResponse[0];
-      setApiResponse(errorResponse); // Stocker la réponse de l'API dans l'état
-    }
-  };
-
-
+  }
   
   return (
     <View style={styles.container}>
@@ -92,7 +70,7 @@ export const SignIn = ({ navigation }: { navigation: any }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.signupButton}
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.navigate("Inscription")}
           >
             <Text style={styles.signupButtonText}>S'inscrire</Text>
           </TouchableOpacity>
