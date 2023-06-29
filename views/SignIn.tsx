@@ -1,45 +1,49 @@
 import React, { useState } from "react";
 import { styles } from "../SingIn.syle";
-import { View, TouchableOpacity, Text, TextInput } from "react-native";
+import { View, TouchableOpacity, Text, TextInput, ImageBackground } from "react-native";
 import { Divider } from "@ui-kitten/components";
 
 export const SignIn = ({ navigation }: { navigation: any }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [apiResponse, setApiResponse] = useState<any>(null); // État pour stocker la réponse de l'API
+  // Connexion réussie
+
 
   const handleLogin = () => {
     // Simulation de réponse de l'API pour la connexion
     const mockApiResponse = [
       {
         status: false,
-        message: "validation error",
+        message: "Email ou mot de passe incorect",
         errors: {
           email: ["The email has already been taken."],
         },
       },
       {
         status: true,
-        message: "User Created Successfully",
+        message: "Connexion réussi !",
         token: "8|9Gkue3qabi9ekHXoER0alGW0whezRwZCggC44QoP",
       },
     ];
 
     // Logique de vérification des identifiants
-    const user = mockApiResponse.find(
-      (item) => item.status === true && item.token !== undefined
-    );
-
-    if (user) {
+    if (email === "elrisitas@gmail.com" && password === "jedi") {
       // Connexion réussie
+      const user = mockApiResponse[1];
       setApiResponse(user); // Stocker la réponse de l'API dans l'état
       navigation.setParams({ isLogged: true }); // Changer le state 'isLogged' dans le composant parent
+      const successResponse = mockApiResponse[1];
+      setApiResponse(successResponse); // Stocker la réponse de l'API dans l'état
     } else {
       // Connexion échouée
-      setApiResponse(mockApiResponse[0]); // Stocker la réponse de l'API dans l'état
+      const errorResponse = mockApiResponse[0];
+      setApiResponse(errorResponse); // Stocker la réponse de l'API dans l'état
     }
   };
 
+
+  
   return (
     <View style={styles.container}>
       <View style={styles.authContent}>
@@ -48,12 +52,18 @@ export const SignIn = ({ navigation }: { navigation: any }) => {
           <Text style={styles.subtitle}>
             Veuillez entrer votre email et mot de passe
           </Text>
+      
+                {apiResponse && !apiResponse.status && (
+                  <Text style={styles.error}>{apiResponse.message}</Text>
+                  )}
+                  {apiResponse && apiResponse.status && (
+                   <Text style={styles.success}>{apiResponse.message}</Text>
+                   )}
         </View>
-
         <View style={styles.form}>
           <TextInput
             style={styles.input}
-            placeholder="elrisita@gmail.com"
+            placeholder="elrisitas@gmail.com"
             value={email}
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
@@ -86,10 +96,6 @@ export const SignIn = ({ navigation }: { navigation: any }) => {
           >
             <Text style={styles.signupButtonText}>S'inscrire</Text>
           </TouchableOpacity>
-
-          {apiResponse && !apiResponse.status && (
-            <Text style={styles.error}>{apiResponse.message}</Text>
-          )}
         </View>
       </View>
     </View>

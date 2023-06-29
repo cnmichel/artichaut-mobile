@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   authContent: {
     flex: 1,
     alignItems: "center",
@@ -88,7 +89,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   error: {
-    color: "red", // Ajout de la propriété 'error' pour le style de texte d'erreur
+    color: "red", 
+    marginBottom: 16,
+    textAlign: "center",
+  }, 
+   success: {
+    color: "#00B561", 
     marginBottom: 16,
     textAlign: "center",
   },

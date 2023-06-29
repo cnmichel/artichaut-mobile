@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { SignIn } from "./views/SignIn";
-import { SignUp } from "./views/SingUp";
+import { SignUp } from "./views/SignUp";
 import { Home } from "./views/Home";
 import { UserProfile } from "./views/UserProfile";
 import { Reservation } from "./views/Reservation";
