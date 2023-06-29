@@ -12,7 +12,7 @@ export default function Store() {
     try {
       return await SecureStore.getItemAsync(key);
     } catch (err) {
-      console.error(err);
+      console.error('Key does not exist');
     }
   }
 
