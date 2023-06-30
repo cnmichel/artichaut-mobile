@@ -1,44 +1,40 @@
-import React, {useRef, useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Input, Layout, Button, Divider } from '@ui-kitten/components';
-import {styles} from '../Styles/SignUp.style';
+import React, { useState } from 'react';
+import { View, Text, Image } from 'react-native';
+import { Input, Button} from '@ui-kitten/components';
+import { styles } from '../Styles/SignUp.style';
+import Auth  from '../services/Auth';
+import Store from '../services/Store';
 
-export const SignUp = () => {
+const {saveItem} = Store();
+const {register} = Auth();
+
+// @ts-ignore
+export const SignUp = ({route }: { navigation: any }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [alertMail, setAlertMail] = useState(false);
     const [alertEmptyInput, setAlertEmptyInput] = useState(false);
     const [alertPassword, setAlertPassword] = useState(false);
     const [alertSuccess, setAlertSuccess] = useState(false);
-    const [alertFailure, setAlertFailure] = useState(false);
-    const formRef = useRef(null);
+    let messageStatus = "";
 
-    const validateMail = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailRegex.test(email)) {
-            // Mauvaise syntaxe de l'e-mail
-            setAlertMail(true);
-            return false;
-        }
-        return true;
-    }
     const validatePass = () => {
         //reset all message show
         setAlertMail(false);
         setAlertPassword(false);
         setAlertEmptyInput(false);
-        setAlertSuccess(false);
-        setAlertFailure(false)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if(password == "" || passwordConfirm == "" || email == "")
+        if (!emailRegex.test(email)) {
+            setAlertMail(true);
+        }
+        else if(password == "" || passwordConfirm == "" || email == "")
         {
             setAlertEmptyInput(true);
         }
         else if(password != passwordConfirm){
-            //mauvaise correspondance
+            //does not equal
             setAlertPassword(true);
             return false;
         }
@@ -48,32 +44,28 @@ export const SignUp = () => {
     };
 
     const onSubmit = async () => {
-        console.log(formRef.current);
-        if(formRef.current) {
-            setIsLoading(true);
-
-            // Form validation
+        // Form validation
             try {
                 // await formRef.current;
 
                 if (validatePass()) {
-                    const formData = formRef; // Récupération des données du formulaire
+
                     const user = {
-                        email: email,
+                        email:  email,
                         password: password,
                         password_confirmation: passwordConfirm
                     };
-
+                   const dataRegister = await register(user)
                     try {
-                        const data = [formData];
-                        console.log(data);
-                        if (data[0].status) {
+                        if (dataRegister.status) {
+                            messageStatus = dataRegister.message;
                             setAlertSuccess(true);
+                           await saveItem('token', dataRegister.token);
+                            route.params.redirectToHome(true);
                             // Handle successful registration
                         } else {
-                            // Handle registration failure
-                            setAlertFailure(true);
-                            //console.log(data[0].errors.email[0]);
+                            messageStatus = dataRegister.message;
+                           setAlertSuccess(true);
                         }
                     } catch (error) {
                         // Handle registration error
@@ -81,19 +73,19 @@ export const SignUp = () => {
                     }
                 }
             }catch (error) {
-                // Gérer les erreurs de validation du formulaire
+                // handle form errors
                 console.log(error);
             }
-        }
-        setIsLoading(false);
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> Inscription</Text>
-            <Text style={styles.subtitle}>Veuillez saisir une adresse email valide et un mot de passe</Text>
+            <View>
+                <Text style={styles.title}> Inscription <Image style={styles.img} source={require('../assets/icon/logo.png')}/> </Text>
+                <Text style={styles.subtitle}>Veuillez saisir une adresse email valide et un mot de passe</Text>
+             </View>
 
-
+            <View style={styles.form}>
             <Input
                 style={styles.input}
                 value={email}
@@ -118,16 +110,14 @@ export const SignUp = () => {
                 placeholder="Confirmer le mot de passe"
                 secureTextEntry
             />
-            {alertFailure && <Text>L'email est déja utilisé</Text>}
-            {alertSuccess && <Text>Inscription réussie</Text>}
+            {alertSuccess && <Text>{alertSuccess}</Text>}
             {alertEmptyInput && <Text>Veuillez remplir tout les champs</Text>}
             {alertPassword && <Text>les mots de passe ne sont pas identiques</Text>}
 
-            <Button style={styles.button} onPress={() => onSubmit(formRef)} disabled={isLoading}>
+            <Button style={styles.button} onPress={() => onSubmit()} >
                 Sign Up
             </Button>
-
-            <Divider/>
+            </View>
         </View>
     );
 
