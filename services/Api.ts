@@ -7,15 +7,16 @@ const { getItem } = Store();
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 // Get the locale from local storage if there is one or from navigator
-const locale = await getItem('language');
-const token = await getItem('token');
+const locale = null;
+const token = null;
+
 
 // Axios request config
 // @ts-ignore
 const config = {
   baseURL: baseUrl,
   headers: {
-    Authorization: `Bearer ${token}`
+    Authorization: `Bearer 8|opwQUJUPeWEQfHNRkFJuWlVGLkixHNR8MgZy1tQa`
   },
   params: {
     // @ts-ignore
@@ -173,6 +174,8 @@ const config = {
       .then((res) => res.data)
       .catch((err) => errorHandler(err));
   }
+
+    
 
 
   // PROMOS API

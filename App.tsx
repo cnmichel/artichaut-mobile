@@ -35,7 +35,7 @@ export default function App() {
                             <Ionicons name="bed-outline" size={size} color={color}/>) }}/>
             <Tab.Screen name="Mon Compte"
                         component={UserProfile}
-                        options={{ tabBarIcon: ({ color, size }) => (
+                        options={{ tabBarIcon: ({ color, size })=> (
                             <Ionicons name="person-outline" size={size} color={color}/>) }}/>
           </Tab.Navigator>
           :
