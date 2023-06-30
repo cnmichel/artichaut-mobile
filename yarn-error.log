@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\bin\yarn.js install
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\walcz\AppData\Local\Microsoft\WindowsApps;;C:\Users\walcz\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\walcz\AppData\Roaming\npm
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\walcz\AppData\Local\Microsoft\WindowsApps;C:\Users\walcz\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\walcz\AppData\Roaming\npm
 
 Yarn version: 
   1.22.19
@@ -15,14 +15,14 @@ Platform:
 
 Trace: 
   SyntaxError: Unknown token: { line: 3, col: 2, type: 'INVALID', value: undefined } 3:2 in C:\Users\walcz\OneDrive\Documents\Campus\artichaud-mobile\yarn.lock
-      at Parser.unexpected (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:63491:11)
-      at Parser.parse (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:63622:14)
-      at parse (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:63696:21)
-      at module.exports.exports.default (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:63258:96)
-      at Function.<anonymous> (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:3068:63)
+      at Parser.unexpected (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:63491:11)
+      at Parser.parse (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:63622:14)
+      at parse (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:63696:21)
+      at module.exports.exports.default (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:63258:96)
+      at Function.<anonymous> (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:3068:63)
       at Generator.next (<anonymous>)
-      at step (C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-      at C:\Users\walcz\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+      at step (C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:310:30)
+      at C:\Users\walcz\AppData\Local\node\corepack\yarn\1.22.19\lib\cli.js:321:13
 
 npm manifest: 
   {

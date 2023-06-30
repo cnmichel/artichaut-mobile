@@ -1,11 +1,7 @@
 import React, {useRef, useState} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Input, Layout, Button, Divider } from '@ui-kitten/components';
-import {styles} from './Styles/SignUp.style';
-import {components} from "@eva-design/eva/mapping";
-//import { register } from "@/services/auth.js";
-import Auth from "../services/Auth";
-import axios from "axios";
+import {styles} from '../Styles/SignUp.style';
 
 export const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -63,9 +59,9 @@ export const SignUp = () => {
                 if (validatePass()) {
                     const formData = formRef; // Récupération des données du formulaire
                     const user = {
-                        email: formData.email,
-                        password: formData.password,
-                        password_confirmation: formData.passwordConfirm
+                        email: email,
+                        password: password,
+                        password_confirmation: passwordConfirm
                     };
 
                     try {
