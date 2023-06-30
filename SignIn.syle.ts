@@ -3,14 +3,19 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 30,
+    padding: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 60,
+  },
+    img: {
+    height:50,
+    width:50,
     alignItems: "center",
     justifyContent: "center",
   },
-
   authContent: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   title: {
@@ -33,10 +38,13 @@ export const styles = StyleSheet.create({
   input: {
     height: 40,
     borderColor: "gray",
+    width: 300,
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: "white",
+
   },
 
   forgotPassword: {
@@ -53,7 +61,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    width: 208,
+    width: 300,
     marginTop: 20,
   },
   loginButtonText: {
@@ -75,11 +83,12 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signupButton: {
+    backgroundColor: "rgb(248 248 248);",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#00B561",
     padding: 10,
-    width: "60%",
+    width: 300,
     marginBottom: 10,
   },
   signupButtonText: {

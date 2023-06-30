@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -18,6 +18,7 @@ export default function App() {
 
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
+  
   return (
     <NavigationContainer>
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -57,6 +58,7 @@ export default function App() {
               name="Connexion"
               component={SignIn}
               options={{ headerShown: false }}
+              initialParams={{ redirectToHome: (res:boolean) => setIsLogged(res) }}
             />
             <Stack.Screen
               name="Inscription"
