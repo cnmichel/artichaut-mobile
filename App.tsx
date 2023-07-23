@@ -1,4 +1,4 @@
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,14 +11,29 @@ import { SignUp } from "./views/SignUp";
 import { Home } from "./views/Home";
 import { UserProfile } from "./views/UserProfile";
 import { Reservation } from "./views/Reservation";
+import SplashScreen from "./components/SplashScreen";
 
 export default function App() {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
-  
+  useEffect(() => {
+    // Simulate some loading process
+    // For this example, let's assume the loading process takes 2 seconds
+    const loadingTimer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 2000);
+
+    return () => clearTimeout(loadingTimer);
+  }, []);
+
+  if (!isLoaded) {
+    return <SplashScreen />;
+  }
+
   return (
     <NavigationContainer>
       <ApplicationProvider {...eva} theme={eva.light}>
@@ -58,7 +73,9 @@ export default function App() {
               name="Connexion"
               component={SignIn}
               options={{ headerShown: false }}
-              initialParams={{ redirectToHome: (res:boolean) => setIsLogged(res) }}
+              initialParams={{
+                redirectToHome: (res: boolean) => setIsLogged(res),
+              }}
             />
             <Stack.Screen
               name="Inscription"
