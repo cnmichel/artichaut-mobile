@@ -16,6 +16,10 @@ const SplashScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Image
+        source={require("../assets/icon/artichaut-logoless-v2.png")}
+        style={styles.title}
+      />
       <Image source={require("../assets/icon/logo.png")} style={styles.logo} />
       <ActivityIndicator size="large" color="green" />
     </View>
@@ -28,6 +32,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    flexDirection: "column",
+  },
+  title: {
+    width: "90%",
+    height: "15%",
+    marginBottom: 100,
   },
   logo: {
     width: 150,
