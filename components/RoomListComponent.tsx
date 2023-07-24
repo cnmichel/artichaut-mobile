@@ -37,9 +37,16 @@ const RoomListComponent = ({setStep, setDataRoom}: {
     ];
 
 
-    const handleReservation = (selectedRoom) => {
-            setStep("recapitulatif");
-            setDataRoom([selectedRoom]);
+    const handleReservation = (selectedRoom: {
+        name: string;
+        price: number;
+        available: number;
+        description: string;
+        img: string;
+    }) => {
+        setStep("recapitulatif");
+        setDataRoom(selectedRoom); // Remove the square brackets [] around selectedRoom
+        console.log(selectedRoom);
     };
 
     const [available, setAvailable] = useState([]);
@@ -51,9 +58,9 @@ const RoomListComponent = ({setStep, setDataRoom}: {
     
     return (
         <View style={styles.container}>
-            {available.map((data, index) => (
+            {rooms.map((data, index) => (
                 <Card style={styles.card} key={index}>
-                    <Text style={styles.title}>{data.details.name} <Text style={styles.price}>{data.details.price}€/pers</Text></Text>
+                    <Text style={styles.title}>{data.name} <Text style={styles.price}>{data.price}€/pers</Text></Text>
  		            <Image 
                         source={{ uri: "https://picsum.photos/200/300" }}
                         style={styles.image}

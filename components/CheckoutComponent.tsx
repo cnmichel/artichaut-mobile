@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Card, Button  } from '@ui-kitten/components';
+import { Card, Button, Toggle } from '@ui-kitten/components';
 import api from '../services/Api';
 
 const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<React.SetStateAction<"liste" | "recapitulatif" | "paiement">>, getDataRoom: any }) => {
@@ -11,12 +11,6 @@ const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<R
         setStep('liste');
     }
 
-    const [checked, setChecked] = React.useState(false);
-
-    const onCheckedChange = (isChecked): void => {
-        setChecked(isChecked);
-    };
-    
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
@@ -26,19 +20,46 @@ const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<R
         });
     }, []);
 
+    const [checkedStates, setCheckedStates] = useState({});
+    const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice as a number
+
+    const onCheckedChange = (index: number, isChecked: boolean, price: number): void => {
+        setCheckedStates((prevState) => ({
+            ...prevState,
+            [index]: isChecked,
+        }));
+
+        setTotalPrice((prevTotalPrice) => {
+            if (isChecked) {
+                return prevTotalPrice + Number(price); // Convert price to number before addition
+            } else {
+                return prevTotalPrice - Number(price); // Convert price to number before subtraction
+            }
+        });
+    };
+
     return (
         <View style={styles.container}>
             <Button style={styles.backButton} status='danger' onPress={handleBack}>Retour</Button>
             <Card>
                 <Text>Options de séjour</Text>
                 {options.map((data, index) => (
-                    <Text key={index}>{data.name} {data.price}</Text>
+                    <View key={index}>
+                        <Text>{data.name} {data.price}</Text>
+                        <Toggle
+                            checked={checkedStates[index] || false}
+                            onChange={(isChecked) => onCheckedChange(index, isChecked, data.price)}
+                        >
+                            {`Checked: ${checkedStates[index] || false}`}
+                        </Toggle>
+                    </View>
                 ))}
             </Card>
             <Card>
                 <Text>Recapitulatif de votre réservation</Text>
-                <Text>Chambre: {getDataRoom[0].details.name}</Text>
-                <Text>Prix: {getDataRoom[0].details.price}</Text>
+                <Text>Chambre: {getDataRoom.name}</Text>
+                <Text>Total HT: {getDataRoom.price + totalPrice} €</Text>
+                <Text>Total HTT: {(getDataRoom.price + totalPrice)*1.25} €</Text>
             </Card>
             <Button status='success'>Finaliser la réservation</Button>
         </View>

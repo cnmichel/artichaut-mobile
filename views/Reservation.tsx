@@ -2,17 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import RoomListComponent from '../components/RoomListComponent';
 import CheckoutComponent from '../components/CheckoutComponent';
+import ChooseDateComponent from '../components/ChooseDateComponent';
 
 export const Reservation = () => {
 
   const [step, setStep] = useState<"liste" | "recapitulatif" | "paiement">("liste");
+
 
   const [dataRoom, setDataRoom] = useState([]);
 
   const handleSetStep = (newStep) => {
     setStep(newStep);
   };
-
   const handleSetDataRoom = (data: any) => {
     setDataRoom(data);
   };
