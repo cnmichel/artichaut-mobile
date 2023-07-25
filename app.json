@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "artichaut-mobile",
-    "slug": "artichaut-mobile",
+    "slug": "artichauthotelreactapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,25 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "build": { "babel": { "include": [ "@ui-kitten/components" ] } }
+      "build": {
+        "babel": {
+          "include": [
+            "@ui-kitten/components"
+          ]
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "33aa63a6-ab8d-4690-bdc5-8d6a76b620df"
+      }
+    },
+    "owner": "azyxv",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/33aa63a6-ab8d-4690-bdc5-8d6a76b620df"
     }
   }
 }
