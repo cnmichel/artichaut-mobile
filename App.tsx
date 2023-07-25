@@ -67,7 +67,7 @@ export default function App() {
               }}
             />
           </Tab.Navigator>
-        ) : (
+          :
           <Stack.Navigator>
             <Stack.Screen
               name="Connexion"
