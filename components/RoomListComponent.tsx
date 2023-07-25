@@ -1,8 +1,16 @@
 import { Card, Button } from '@ui-kitten/components';
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import api from '../services/Api';
+  
 
-const RoomListComponent = () => {
+const RoomListComponent = ({setStep, setDataRoom}: {
+                                                    setStep: React.Dispatch<React.SetStateAction<"liste" | "recapitulatif" | "paiement">>;
+                                                    setDataRoom: any;
+                                                })  => {
+
+    const { getProductsByCategory, getAvailable } = api();                                              
 
     const rooms = [
         {
@@ -28,18 +36,37 @@ const RoomListComponent = () => {
         }
     ];
 
+
+    const handleReservation = (selectedRoom: {
+        name: string;
+        price: number;
+        available: number;
+        description: string;
+        img: string;
+    }) => {
+        setStep("recapitulatif");
+        setDataRoom(selectedRoom); // Remove the square brackets [] around selectedRoom
+        console.log(selectedRoom);
+    };
+
+    const [available, setAvailable] = useState([]);
+
+    useEffect(() => {
+        getAvailable("2023-07-03 11:21:19", "2023-07-06 11:21:19").then((res) => {const availableArray = Object.values(res);
+            setAvailable(availableArray)});
+    }, []);
+    
     return (
         <View style={styles.container}>
-            {rooms.map((room, index) => (
+            {rooms.map((data, index) => (
                 <Card style={styles.card} key={index}>
-                    <Text style={styles.title}>{room.name} <Text style={styles.price}>{room.price}€/pers</Text></Text>
-                    <Image 
-                        source={{ uri: room.img }}
+                    <Text style={styles.title}>{data.name} <Text style={styles.price}>{data.price}€/pers</Text></Text>
+ 		            <Image 
+                        source={{ uri: "https://picsum.photos/200/300" }}
                         style={styles.image}
                     />
-                    <Text style={styles.description}>{room.description}</Text>
-                    {room.available > 0 ? (
-                        <Button style={styles.button} status='success'>Reserver</Button>
+                    {data.available > 0 ? (
+                       <Button style={styles.button} status='success' onPress={() => handleReservation(data)}>Reserver</Button> 
                     ) : (
                         <Button style={styles.button} status='danger'>Indisponible</Button>
                     )}
@@ -83,6 +110,5 @@ const styles = StyleSheet.create({
         marginTop: 10,
     }
 });
-
 
 export default RoomListComponent;

@@ -45,37 +45,8 @@ export const SignUp = ({route }: { navigation: any }) => {
 
     const onSubmit = async () => {
         // Form validation
-            try {
-                // await formRef.current;
-
-                if (validatePass()) {
-
-                    const user = {
-                        email:  email,
-                        password: password,
-                        password_confirmation: passwordConfirm
-                    };
-                   const dataRegister = await register(user)
-                    try {
-                        if (dataRegister.status) {
-                            messageStatus = dataRegister.message;
-                            setAlertSuccess(true);
-                           await saveItem('token', dataRegister.token);
                             route.params.redirectToHome(true);
-                            // Handle successful registration
-                        } else {
-                            messageStatus = dataRegister.message;
-                           setAlertSuccess(true);
-                        }
-                    } catch (error) {
-                        // Handle registration error
-                        console.log(error);
-                    }
-                }
-            }catch (error) {
-                // handle form errors
-                console.log(error);
-            }
+
     }
 
     return (
