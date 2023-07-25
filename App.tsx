@@ -41,11 +41,16 @@ export default function App() {
                         component={UserProfile}
                         options={{ tabBarIcon: ({ color, size }) => (
                             <Ionicons name="person-outline" size={size} color={color}/>) }}/>
+              <Stack.Screen
+                  name="Inscription"
+                  component={SignUp}
+                  options={{ headerShown: false }}
+              />
           </Tab.Navigator>
           :
           <Stack.Navigator>
             {/* <Stack.Screen name="Connexion" component={SignIn} options={{ headerShown: false }}/>*/
-            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} initialParams={{ redirectToHome: (res:boolean) => setIsLogged(res) }}/> }
+            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} initialParams={{ redirectToHome: (res:boolean) => setIsLogged(res) }} /> }
           </Stack.Navigator>
         }
         <StatusBar style="auto" />
