@@ -7,58 +7,122 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        gap: 10,
-        width: "100%" ,
+        gap: 16,
         height: "100%"
     },
+    
+    Background: {
+        flex: 1,
+        resizeMode: 'cover',
+        width: '100%',
+        height: '100%',
+        alignItems: "center",
+        borderRadius: 10,
+        
+    },
+    
     header: {
-        borderWidth: 1,
         borderRadius: 10,
         padding: 3,
         flex: 1 ,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "row",
+        flexDirection: "column",
     },
+    
+    user: {
+        textAlign: 'left',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    
     img: {
-        height:66,
-        width:164,
+        height:20,
+        width:20,
     },
+    
     title: {
+        marginTop: 20,
+        textAlign: 'left',
         fontSize: 30,
         fontWeight: "bold",
+        marginBottom:10,
+
     },
+    
+    infos: {
+        marginTop: 28,
+        textAlign: 'left',
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom:10,
+
+    },
+    
     form: {
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 20,
+        width: '90%',
+        flex: 1 ,
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        marginBottom: 100,
     },
-    input: {
+    
+    editNames: {
+        flex: 1 ,
+        flexDirection: "row",
+    },
+    
+    editInfos: {
+        flex: 1 ,
+        flexDirection: "row",
+        marginTop: 20,
+        marginBottom: 20,
+    },
+    
+    other: {
+        flex: 1 ,
+        flexDirection: "column",
+    },
+    
+    names: {
         height: 40,
         borderColor: "gray",
-        width: 300,
+        width: 200,
         borderWidth: 1,
         borderRadius: 5,
-        marginBottom: 10,
         paddingHorizontal: 10,
         backgroundColor: "white",
     },
-    select: {
-        marginBottom: 10,
+    
+    input: {
+        height: 40,
+        borderColor: "gray",
+        width: '100%',
+        borderWidth: 1,
+        borderRadius: 5,
         paddingHorizontal: 10,
+        backgroundColor: "white",
+        marginBottom:10,
     },
+    
+    select: {
+        paddingHorizontal: 10,
+        width: 200,
+    },
+    
     button: {
         backgroundColor: "#00B561",
         borderRadius: 10,
         padding: 15,
-        marginBottom: 10,
         width: 280,
-        marginTop: 20,
+        marginTop: 10,
+        marginBottom:10,
     },
+    
     inputContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     }
+    
 });
 
 
