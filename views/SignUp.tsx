@@ -45,8 +45,37 @@ export const SignUp = ({route }: { navigation: any }) => {
 
     const onSubmit = async () => {
         // Form validation
-                            route.params.redirectToHome(true);
+        try {
+            // await formRef.current;
 
+            if (validatePass()) {
+
+                const user = {
+                    email:  email,
+                    password: password,
+                    password_confirmation: passwordConfirm
+                };
+                const dataRegister = await register(user)
+                try {
+                    if (dataRegister.status) {
+                        messageStatus = dataRegister.message;
+                        setAlertSuccess(true);
+                        await saveItem('token', dataRegister.token);
+                        route.params.redirectToHome(true);
+                        // Handle successful registration
+                    } else {
+                        messageStatus = dataRegister.message;
+                        setAlertSuccess(true);
+                    }
+                } catch (error) {
+                    // Handle registration error
+                    console.log(error);
+                }
+            }
+        }catch (error) {
+            // handle form errors
+            console.log(error);
+        }
     }
 
     return (
@@ -54,41 +83,42 @@ export const SignUp = ({route }: { navigation: any }) => {
             <View>
                 <Text style={styles.title}> Inscription <Image style={styles.img} source={require('../assets/icon/logo.png')}/> </Text>
                 <Text style={styles.subtitle}>Veuillez saisir une adresse email valide et un mot de passe</Text>
-             </View>
+            </View>
 
             <View style={styles.form}>
-            <Input
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Saisir une adresse mail"
-            />
+                <Input
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Saisir une adresse mail"
+                />
 
-            {alertMail && <Text>Entrer un e-mail valide</Text>}
+                {alertMail && <Text>Entrer un e-mail valide</Text>}
 
-            <Input
-                style={styles.input}
-                value={password}
-                onChangeText={setPassword}
-                placeholder="Saisir le mot de passe"
-                secureTextEntry
-            />
+                <Input
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Saisir le mot de passe"
+                    secureTextEntry
+                />
 
-            <Input
-                style={styles.input}
-                value={passwordConfirm}
-                onChangeText={setPasswordConfirm}
-                placeholder="Confirmer le mot de passe"
-                secureTextEntry
-            />
-            {alertSuccess && <Text>{alertSuccess}</Text>}
-            {alertEmptyInput && <Text>Veuillez remplir tout les champs</Text>}
-            {alertPassword && <Text>les mots de passe ne sont pas identiques</Text>}
+                <Input
+                    style={styles.input}
+                    value={passwordConfirm}
+                    onChangeText={setPasswordConfirm}
+                    placeholder="Confirmer le mot de passe"
+                    secureTextEntry
+                />
+                {alertSuccess && <Text>{alertSuccess}</Text>}
+                {alertEmptyInput && <Text>Veuillez remplir tout les champs</Text>}
+                {alertPassword && <Text>les mots de passe ne sont pas identiques</Text>}
 
-            <Button style={styles.button} onPress={() => onSubmit()} >
-                Sign Up
-            </Button>
+                <Button style={styles.button} onPress={() => onSubmit()} >
+                    Sign Up
+                </Button>
             </View>
         </View>
     );
+
 };
