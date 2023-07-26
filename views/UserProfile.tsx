@@ -17,6 +17,9 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
+    const [alertEmptyField, setAlertEmptyField] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [alertNewSuccess, setAlertNewSuccess] = useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
 
     const [date, setDate] = React.useState(new Date());
@@ -29,6 +32,30 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
             // Handle registration error
             console.log(error);
         }
+    }
+    const onSaveMdp = async () => {
+        setNewPassword(false);
+        setAlertEmptyField(false);
+
+        if(password == "" || newPasswordConfirm == "" || newPasswordConfirm === "")
+        {
+            setAlertEmptyField(true);
+            return;
+        }
+
+        const isCurrentPasswordValid = await checkCurrentPassword(currentPassword);
+
+        if (!isCurrentPasswordValid) {
+            // Afficher un message d'erreur si le mot de passe actuel est incorrect
+            setAlertEmptyField(true);
+            return;
+        }
+        else if(password != newPasswordConfirm){
+            //does not equal
+            setAlertEmptyField(true);
+            return false;
+        }
+        return true;
     }
     const useSelectState = (initialState = undefined): SelectProps => {
         const [selectedIndex, setSelectedIndex] = React.useState(initialState);
@@ -95,14 +122,6 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
             <View style={styles.form}>
                 <Input
                     style={styles.input}
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholder="Mot de passe actuel"
-                    secureTextEntry
-                />
-
-                <Input
-                    style={styles.input}
                     value={newPassword}
                     onChangeText={setNewPassword}
                     placeholder="Nouveau mot de passe"
@@ -116,7 +135,22 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                     placeholder="Confirmation mot de passe"
                     secureTextEntry
                 />
+                {alertNewSuccess && <Text>{alertNewSuccess}</Text>}
+                {alertEmptyField && <Text>Veuillez remplir tout les champs</Text>}
+                {newPassword && <Text>les mots de passe ne sont pas identiques</Text>}
+
+                <Button style={styles.button} onPress={() => onSave()} >
+                    Enregistrer
+                </Button>
             </View>
         </View>
   )
 }
+/*                <Input
+                    style={styles.input}
+                    value={currentPassword}
+                    onChangeText={setCurrentPassword}
+                    placeholder="Mot de passe actuel"
+                    secureTextEntry
+                />
+*/
