@@ -91,5 +91,4 @@ export const SignUp = ({route }: { navigation: any }) => {
             </View>
         </View>
     );
-
 };
