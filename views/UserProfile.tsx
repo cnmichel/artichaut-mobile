@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image } from 'react-native';
-import {Button,IndexPath, Input, Select, SelectItem,Layout} from '@ui-kitten/components';
+import {Button,Datepicker, IndexPath, Input, Select, SelectItem, SelectProps} from '@ui-kitten/components';
 import { styles } from '../Styles/UserProfile.style';
 
 interface Props {
@@ -19,10 +19,8 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
     const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
     const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
 
-    interface IndexPath {
-        row: number;
-        section?: number;
-    }
+    const [date, setDate] = React.useState(new Date());
+    const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
     const onSave = async () => {
         // Form validation
         try{
@@ -32,11 +30,18 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
             console.log(error);
         }
     }
+    const useSelectState = (initialState = undefined): SelectProps => {
+        const [selectedIndex, setSelectedIndex] = React.useState(initialState);
+        return { selectedIndex, onSelect: setSelectedIndex };
+    };
 
-  return (
+    const genreSelectState = useSelectState();
+
+    return (
     <View  style={styles.container}>
         <View style={styles.header}>
-            <Text style={styles.title}> Bienvenue <Image style={styles.img} source={require('../assets/rang gold.png')}/> </Text>
+            <Text style={styles.title}> Bienvenue  </Text>
+            <Image style={styles.img} source={require('../assets/rang gold.png')}/>
         </View>
 
             <View style={styles.form}>
@@ -57,19 +62,23 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                 />
 
                 <Select
-                    //selectedIndex={selectedIndex}
+                    selectedIndex={selectedIndex}
                     onSelect={index => setSelectedIndex(index)}
+                    placeholder='Genre'
+                    {...genreSelectState}
                     style={styles.select}
                 >
                     <SelectItem title='Homme' />
                     <SelectItem title='Femme' />
                 </Select>
 
-                <Input
-                    style={styles.input}
-                    value={birthday}
-                    onChangeText={setBirthday}
-                    placeholder=""
+                <Datepicker
+                    style={styles.select}
+                    placeholder='Date de naissance'
+                    date={selectedDate}
+                    onSelect={nextDate => setSelectedDate(nextDate)}
+                    // Efface la sélection en définissant selectedDate à null lorsque le composant est effacé
+                    onClear={() => setSelectedDate(null)}
                 />
 
                 <Input

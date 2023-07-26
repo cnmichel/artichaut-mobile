@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import {components} from "@eva-design/eva/mapping";
 import height = components.Avatar.meta.parameters.height;
-
 export const styles = StyleSheet.create({
     container: {
         flex: 1 ,
@@ -15,19 +14,19 @@ export const styles = StyleSheet.create({
     header: {
         borderWidth: 1,
         borderRadius: 10,
-        padding: 5,
+        padding: 3,
+        flex: 1 ,
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
     },
     img: {
         height:66,
         width:164,
-        alignItems: "center"
     },
     title: {
-        marginTop:100,
         fontSize: 30,
         fontWeight: "bold",
-        marginBottom: 10,
-        textAlign: "left",
     },
     form: {
         borderWidth: 1,
@@ -61,3 +60,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
     }
 });
+
+
+
