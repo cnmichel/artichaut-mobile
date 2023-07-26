@@ -28,7 +28,7 @@ export const SignIn = ({ navigation, route }: { navigation: any }) => {
       setSuccessMessage("Connexion réussie !"); // Mise à jour du message de succès
       setErrorMessage(""); // Réinitialisation du message d'erreur
       await saveItem("token", responseData.token); // Sauvegarde du token de l'API dans le Store
-      route.params.redirectToHome(true)
+      route.params.redirectToHome(true);
     } catch (error) {
       console.error(error);
       setToken(""); // Réinitialisation du token en cas d'erreur

@@ -67,14 +67,13 @@ export default function App() {
                             name="Connexion"
                             component={SignIn}
                             options={{ headerShown: false }}
-                            initialParams={{
-                                redirectToHome: (res: boolean) => setIsLogged(res),
-                            }}
+                            initialParams={{ redirectToHome: (res: boolean) => setIsLogged(res) }} // Pass the parameter here
                         />
                         <Stack.Screen
                             name="Inscription"
                             component={SignUp}
                             options={{ headerShown: false }}
+                            initialParams={{ redirectToHome: (res: boolean) => setIsLogged(res) }} // Pass the parameter here
                         />
                     </Stack.Navigator>
                 )}
