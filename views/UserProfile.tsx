@@ -31,7 +31,7 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
         }
     }
     const useSelectState = (initialState = undefined): SelectProps => {
-        const [genre, setGenre] = useState('');
+        const [selectedIndex, setSelectedIndex] = React.useState(initialState);
         return { selectedIndex, onSelect: setSelectedIndex };
     };
 
@@ -68,10 +68,11 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
 
                 <View style={styles.editInfos}>
                     <Select
-                          selectedIndex={new IndexPath(genre === 'Femme' ? 1 : 0)}
-                          onSelect={index => setGenre(index.row === 0 ? 'Homme' : 'Femme')}
-                          placeholder='Genre'
-                          style={styles.select}
+                        selectedIndex={selectedIndex}
+                        onSelect={index => setSelectedIndex(index)}
+                        placeholder='Genre'
+                        {...genreSelectState}
+                        style={styles.select}
                     >
                         <SelectItem title='Homme' />
                         <SelectItem title='Femme' />
