@@ -34,32 +34,28 @@ export const SignIn = ({ navigation, route }: { navigation: any }) => {
 
     const user = { email, password };
     try {
-      const responseData = await login(user);
-      if (responseData.token) {
-        setToken(responseData.token);
+      const response = await login(user);
+      if (response.success) {
+        // Connexion réussie
+        setToken(response.data.token);
         setSuccessMessage("Connexion réussie !");
         setErrorMessage("");
-        await saveItem("token", responseData.token);
+        await saveItem("token", response.data.token);
+        route.params.redirectToHome(true);
       } else {
-        setToken("");
-        setErrorMessage("Identifiants incorrects. Veuillez réessayer.");
-        setSuccessMessage("");
-        // Supprimer le token en cas d'erreur
-        await saveItem("token", "");
+        // Erreur de connexion
+        setErrorMessage(response.message);
       }
     } catch (error) {
       console.error(error);
-      setToken("");
-      if (error.status === 401) {
-        setErrorMessage("Identifiants incorrects. Veuillez réessayer.");
-      } else {
-        setErrorMessage("Une erreur s'est produite lors de la connexion.");
-      }
+      setErrorMessage("Une erreur s'est produite lors de la connexion.");
       setSuccessMessage("");
       // Supprimer le token en cas d'erreur
       await saveItem("token", "");
     }
   };
+
+
 
 
 
