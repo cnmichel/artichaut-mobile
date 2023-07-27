@@ -33,7 +33,6 @@ const RoomListComponent = ({ setStep, setDataRoom }: {
     const handleReservation = (selectedRoom: RoomData) => {
         setStep("recapitulatif");
         setDataRoom(selectedRoom);
-        console.log(selectedRoom);
     };
 
     const [available, setAvailable] = useState<RoomData[]>([]);
@@ -44,7 +43,6 @@ const RoomListComponent = ({ setStep, setDataRoom }: {
 
         getAvailable(startDate, endDate).then((res: Record<string, RoomData>) => {
             const availableArray = Object.values(res); // Corrected line
-            console.log(availableArray);
             setAvailable(availableArray);
         });
 
