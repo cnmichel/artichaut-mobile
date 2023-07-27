@@ -15,18 +15,15 @@ interface Props {}
 export const UserProfile: React.FC<Props> = (props: Props) => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [genre, setGenre] = useState('');
     const [birthday, setBirthday] = useState('');
     const [email, setEmail] = useState('');
     const [alertMail, setAlertMail] = useState(false);
-    const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
-    const [alertEmptyField, setAlertEmptyField] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
+    const [alertEmptyField, setAlertEmptyField] = useState(false);
     const [alertNewSuccess, setAlertNewSuccess] = useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
-
+    const [alertPassword, setAlertPassword] = useState(false);
     const [date, setDate] = React.useState(new Date());
     const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
     const onSave = async () => {
@@ -39,25 +36,18 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
         }
     }
     const onSaveMdp = async () => {
-        setNewPassword(false);
+        setAlertPassword(false);
         setAlertEmptyField(false);
 
-        if(password == "" || newPasswordConfirm == "" || newPasswordConfirm === "")
+        if(newPassword == "" || newPasswordConfirm == "")
         {
             setAlertEmptyField(true);
             return;
         }
 
-        const isCurrentPasswordValid = await checkCurrentPassword(currentPassword);
-
-        if (!isCurrentPasswordValid) {
-            // Afficher un message d'erreur si le mot de passe actuel est incorrect
-            setAlertEmptyField(true);
-            return;
-        }
-        else if(password != newPasswordConfirm){
+        else if(newPassword != newPasswordConfirm){
             //does not equal
-            setAlertEmptyField(true);
+            setAlertPassword(true);
             return false;
         }
         return true;
@@ -141,7 +131,9 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                     Enregistrer
                 </Button>
             </View>
-            <View style={styles.form}>
+        </View>
+        <Text style={styles.infos}>Votre mot de passe</Text>
+        <View style={styles.form}>
                 <Input
                     style={styles.input}
                     value={newPassword}
@@ -149,32 +141,6 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                     placeholder="Nouveau mot de passe"
                     secureTextEntry
                 />
-            <Button style={styles.button} onPress={onSave}>
-              Enregistrer
-            </Button>
-          </View>
-        </View>
-
-        <Text style={styles.infos}>Votre mot de passe</Text>
-        <View style={styles.form}>
-          <View style={styles.editNames}>
-            <Input
-              style={styles.mdp}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Actuel"
-              secureTextEntry
-            />
-
-            <Input
-              style={styles.mdp}
-              value={newPassword}
-              onChangeText={setNewPassword}
-              placeholder="Nouveau"
-              secureTextEntry
-            />
-          </View>
-
                 <Input
                     style={styles.input}
                     value={newPasswordConfirm}
@@ -184,26 +150,13 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                 />
                 {alertNewSuccess && <Text>{alertNewSuccess}</Text>}
                 {alertEmptyField && <Text>Veuillez remplir tout les champs</Text>}
-                {newPassword && <Text>les mots de passe ne sont pas identiques</Text>}
+                {alertPassword && <Text>les mots de passe ne sont pas identiques</Text>}
 
-                <Button style={styles.button} onPress={() => onSave()} >
+                <Button style={styles.button} onPress={() => onSaveMdp()} >
                     Enregistrer
                 </Button>
             </View>
-          <View style={styles.other}>
-            <Input
-              style={styles.input}
-              value={newPasswordConfirm}
-              onChangeText={setNewPasswordConfirm}
-              placeholder="Confirmation"
-              secureTextEntry
-            />
-            <Button style={styles.button} onPress={onSave}>
-              Enregistrer
-            </Button>
           </View>
-        </View>
-      </View>
     </ScrollView>
   );
 };
