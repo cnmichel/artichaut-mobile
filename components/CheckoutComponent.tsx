@@ -4,7 +4,6 @@ import { Card, Button, Toggle } from '@ui-kitten/components';
 import api from '../services/Api';
 
 const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<React.SetStateAction<"liste" | "recapitulatif" | "paiement">>, getDataRoom: any }) => {
-
     const { getProductsByCategory } = api();
 
     const handleBack = () => {
@@ -26,11 +25,9 @@ const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<R
         })
     }, []);
 
-    // Etats pour les formules et leurs prix sélectionnés
     const [checkedStatesFormules, setCheckedStatesFormules] = useState({});
     const [totalPriceFormules, setTotalPriceFormules] = useState(0);
 
-    // Etats pour les options et leurs prix sélectionnés
     const [checkedStatesOptions, setCheckedStatesOptions] = useState({});
     const [totalPriceOptions, setTotalPriceOptions] = useState(0);
 
@@ -64,6 +61,28 @@ const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<R
         });
     };
 
+    const [totalTTC, setTotalTTC] = useState(0);
+
+    useEffect(() => {
+        const roomPrice = Number(getDataRoom.details.price);
+        const formulesPrice = Object.values(checkedStatesFormules).reduce((total, isChecked, index) => {
+            if (isChecked) {
+                return total + Number(formules[index].price);
+            }
+            return total;
+        }, 0);
+        const optionsPrice = Object.values(checkedStatesOptions).reduce((total, isChecked, index) => {
+            if (isChecked) {
+                return total + Number(options[index].price);
+            }
+            return total;
+        }, 0);
+
+        const calculatedTotalTTC = ((roomPrice + formulesPrice + optionsPrice) * 1.25).toFixed(2);
+
+        setTotalTTC(calculatedTotalTTC);
+    }, [getDataRoom.details.price, checkedStatesFormules, checkedStatesOptions, formules, options]);
+
     return (
         <View style={styles.container}>
             <Button style={styles.backButton} status='danger' onPress={handleBack}>Retour</Button>
@@ -95,17 +114,16 @@ const CheckoutComponent = ({ setStep, getDataRoom }: { setStep: React.Dispatch<R
                     ))}
                 </View>
                 <Text style={styles.title}>Recapitulatif de votre réservation</Text>
-                <Text style={styles.totalHT}>Chambre {getDataRoom.name}</Text>
-                <Text style={styles.totalHT}>Total HT chambre : {getDataRoom.price} €</Text>
+                <Text style={styles.totalHT}>{getDataRoom.details.name}</Text>
+                <Text style={styles.totalHT}>Total HT chambre : {getDataRoom.details.price} €</Text>
                 <Text style={styles.totalHT}>Total HT formules : {totalPriceFormules} €</Text>
                 <Text style={styles.totalHT}>Total HT options : {totalPriceOptions} €</Text>
-                <Text style={styles.totalTTC}>Total HTT : {(getDataRoom.price + totalPriceFormules + totalPriceOptions) * 1.25} €</Text>
+                <Text style={styles.totalTTC}>Total HTT : {totalTTC} €</Text>
                 <Button style={styles.buttons} status='success'>Finaliser la réservation</Button>
             </Card>
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

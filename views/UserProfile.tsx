@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image } from 'react-native';
-import {Button,Datepicker, IndexPath, Input, Select, SelectItem, SelectProps} from '@ui-kitten/components';
-import { styles } from '../Styles/UserProfile.style';
+import React, { useState } from "react";
+import { ImageBackground, View, Text, Image, ScrollView } from "react-native";
+import {
+  Button,
+  Datepicker,
+  IndexPath,
+  Input,
+  Select,
+  SelectItem,
+} from "@ui-kitten/components";
+import { styles } from "../Styles/UserProfile.style";
 
-interface Props {
-
-}
+interface Props {}
 
 export const UserProfile: React.FC<Props> = (props: Props) => {
     const [firstname, setFirstname] = useState('');
@@ -64,56 +69,73 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
 
     const genreSelectState = useSelectState();
 
-    return (
-    <View  style={styles.container}>
+  return (
+    <ScrollView style={styles.container}>
+      <ImageBackground
+        source={require("../assets/backgrounds/aqua.png")}
+        resizeMode="cover"
+        style={styles.background}
+      >
         <View style={styles.header}>
-            <Text style={styles.title}> Bienvenue  </Text>
-            <Image style={styles.img} source={require('../assets/rang gold.png')}/>
+          <Text style={styles.title}>Bienvenue</Text>
+          <Text style={styles.user}>
+            Bobby singer{" "}
+            <Image
+              style={styles.img}
+              source={require("../assets/gold-logo.png")}
+            />
+          </Text>
         </View>
+      </ImageBackground>
 
-            <View style={styles.form}>
-                <Input
-                    style={styles.input}
-                    value={firstname}
-                    onChangeText={setFirstname}
-                    placeholder="Nom"
-                />
+      <View style={styles.contentContainer}>
+        <Text style={styles.infos}>Vos informations</Text>
+        <View style={styles.form}>
+          <View style={styles.editNames}>
+            <Input
+              style={styles.names}
+              value={firstname}
+              onChangeText={setFirstname}
+              placeholder="Nom"
+            />
 
-                {alertMail && <Text>Entrer un e-mail valide</Text>}
+            {alertMail && <Text>Entrer un e-mail valide</Text>}
 
-                <Input
-                    style={styles.input}
-                    value={lastname}
-                    onChangeText={setLastname}
-                    placeholder="Prenom"
-                />
+            <Input
+              style={styles.names}
+              value={lastname}
+              onChangeText={setLastname}
+              placeholder="Prenom"
+            />
+          </View>
 
-                <Select
-                    selectedIndex={selectedIndex}
-                    onSelect={index => setSelectedIndex(index)}
-                    placeholder='Genre'
-                    {...genreSelectState}
-                    style={styles.select}
-                >
-                    <SelectItem title='Homme' />
-                    <SelectItem title='Femme' />
-                </Select>
+          <View style={styles.editInfos}>
+            <Select
+              selectedIndex={selectedIndex}
+              onSelect={(index) => setSelectedIndex(index)}
+              placeholder="Genre"
+              style={styles.select}
+            >
+              <SelectItem title="Homme" />
+              <SelectItem title="Femme" />
+            </Select>
 
-                <Datepicker
-                    style={styles.select}
-                    placeholder='Date de naissance'
-                    date={selectedDate}
-                    onSelect={nextDate => setSelectedDate(nextDate)}
-                    // Efface la sélection en définissant selectedDate à null lorsque le composant est effacé
-                    onClear={() => setSelectedDate(null)}
-                />
+            <Datepicker
+              style={styles.select}
+              placeholder="Date de naissance"
+              date={selectedDate}
+              onSelect={(nextDate) => setSelectedDate(nextDate)}
+              onClear={() => setSelectedDate(null)}
+            />
+          </View>
 
-                <Input
-                    style={styles.input}
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="Email"
-                />
+          <View style={styles.other}>
+            <Input
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email"
+            />
 
                 <Button style={styles.button} onPress={() => onSave()} >
                     Enregistrer
@@ -127,6 +149,31 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                     placeholder="Nouveau mot de passe"
                     secureTextEntry
                 />
+            <Button style={styles.button} onPress={onSave}>
+              Enregistrer
+            </Button>
+          </View>
+        </View>
+
+        <Text style={styles.infos}>Votre mot de passe</Text>
+        <View style={styles.form}>
+          <View style={styles.editNames}>
+            <Input
+              style={styles.mdp}
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Actuel"
+              secureTextEntry
+            />
+
+            <Input
+              style={styles.mdp}
+              value={newPassword}
+              onChangeText={setNewPassword}
+              placeholder="Nouveau"
+              secureTextEntry
+            />
+          </View>
 
                 <Input
                     style={styles.input}
@@ -143,14 +190,20 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
                     Enregistrer
                 </Button>
             </View>
+          <View style={styles.other}>
+            <Input
+              style={styles.input}
+              value={newPasswordConfirm}
+              onChangeText={setNewPasswordConfirm}
+              placeholder="Confirmation"
+              secureTextEntry
+            />
+            <Button style={styles.button} onPress={onSave}>
+              Enregistrer
+            </Button>
+          </View>
         </View>
-  )
-}
-/*                <Input
-                    style={styles.input}
-                    value={currentPassword}
-                    onChangeText={setCurrentPassword}
-                    placeholder="Mot de passe actuel"
-                    secureTextEntry
-                />
-*/
+      </View>
+    </ScrollView>
+  );
+};

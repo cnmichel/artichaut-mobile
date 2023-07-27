@@ -1,13 +1,26 @@
 import { Card, Button } from '@ui-kitten/components';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import api from '../services/Api';
+
 
 interface RoomData {
     name: string;
     price: number;
     available: number;
-    description: string;
-    img: string;
+    details: {
+        active: number;
+        category_id: number;
+        created_at: string;
+        id: number;
+        lang_id: number;
+        name: string;
+        price: string;
+        rate: string;
+        recurrence: string;
+        updated_at: string;
+        img: string;
+    };
 }
 
 const RoomListComponent = ({ setStep, setDataRoom }: {
@@ -15,53 +28,34 @@ const RoomListComponent = ({ setStep, setDataRoom }: {
     setDataRoom: React.Dispatch<React.SetStateAction<RoomData>>;
 }) => {
 
-
-    const rooms: RoomData[] = [
-        {
-            name: 'Standard',
-            price: 100,
-            available: 10,
-            description: 'Une chambre standard, parfaite pour les petits budgets et les radins',
-            img: 'https://picsum.photos/200/300'
-        },
-        {
-            name: 'Luxe',
-            price: 200,
-            available: 5,
-            description: 'Une chambre de luxe parfaite pour les gens qui veulent faire les riches alors que toute lannée ils mangent des pâtes',
-            img: 'https://picsum.photos/200/300'
-        },
-        {
-            name: 'Suite',
-            price: 300,
-            available: 0,
-            description: 'Une suite parfaite pour les gens qui ont trop dargent et qui veulent se la péter',
-            img: 'https://picsum.photos/200/300'
-        }
-    ];
+    const { getAvailable } = api();
 
     const handleReservation = (selectedRoom: RoomData) => {
         setStep("recapitulatif");
         setDataRoom(selectedRoom);
-        console.log(selectedRoom);
     };
 
     const [available, setAvailable] = useState<RoomData[]>([]);
 
     useEffect(() => {
-        getAvailable("2023-07-03 11:21:19", "2023-07-06 11:21:19").then((res: Record<string, RoomData>) => {
-            const availableArray = Object.values(res);
+        const startDate = "2023-10-03 11:21:19"; // Replace this with your desired start date
+        const endDate = "2023-11-06 11:21:19"; // Replace this with your desired end date
+
+        getAvailable(startDate, endDate).then((res: Record<string, RoomData>) => {
+            const availableArray = Object.values(res); // Corrected line
             setAvailable(availableArray);
         });
+
     }, []);
+
 
     return (
         <View style={styles.container}>
-            {rooms.map((data, index) => (
+            {available.map((data, index) => (
                 <Card style={styles.card} key={index}>
-                    <Text style={styles.title}>{data.name} <Text style={styles.price}>{data.price}€/pers</Text></Text>
+                    <Text style={styles.title}>{data.details.name} <Text style={styles.price}>{data.details.price}€/pers</Text></Text>
                     <Image
-                        source={{ uri: "https://picsum.photos/200/300" }}
+                        source={{ uri: data.details.img }}
                         style={styles.image}
                     />
                     {data.available > 0 ? (
@@ -73,6 +67,7 @@ const RoomListComponent = ({ setStep, setDataRoom }: {
             ))}
         </View>
     );
+
 };
 
 const styles = StyleSheet.create({
