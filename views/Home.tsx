@@ -11,12 +11,8 @@ export const Home: React.FC<Props> = (props: Props) => {
   const {  } = props;
 
   return (
-    <>
-       <Image
-        source={{
-          uri: 'https://media.tenor.com/QgTx6fv4IpAAAAAM/el-risitas-juan-joya-borja.gif',
-        }}
-      />
-    </>
+    <View>
+        <Text>Bientôt</Text>
+    </View>
   )
 }
