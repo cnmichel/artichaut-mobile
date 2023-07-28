@@ -106,17 +106,9 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
 
         <Text style={styles.infos}>Votre mot de passe</Text>
         <View style={styles.form}>
-          <View style={styles.editNames}>
+          <View style={styles.other}>
             <Input
-              style={styles.mdp}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Actuel"
-              secureTextEntry
-            />
-
-            <Input
-              style={styles.mdp}
+              style={styles.input}
               value={newPassword}
               onChangeText={setNewPassword}
               placeholder="Nouveau"
