@@ -12,6 +12,7 @@ import { Home } from "./views/Home";
 import { UserProfile } from "./views/UserProfile";
 import { Reservation } from "./views/Reservation";
 import SplashScreen from "./components/SplashScreen";
+
 export default function App() {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const Stack = createNativeStackNavigator();

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Alert, StyleSheet } from 'react-native';
-import { Input, Button } from '@ui-kitten/components';
+import {View, Text, Image, Alert, StyleSheet, TouchableOpacity} from 'react-native';
+import {Input, Button, Divider} from '@ui-kitten/components';
 import Auth from '../services/Auth';
 import Store from '../services/Store';
+import { styles } from "../Styles/SignUp.style";
 import {useNavigation} from "@react-navigation/native";
+import {SearchQuery} from "../components/Search";
 
 const { saveItem } = Store();
 const { register } = Auth();
@@ -38,7 +40,9 @@ export const SignUp = ({ navigation, route }: { navigation: any })  => {
 
         return true;
     };
-
+    const onReturn = () => {
+        navigation.goBack() // Redirige vers l'écran SignIn
+    };
     const onSubmit = async () => {
         // Form validation
         try {
@@ -114,66 +118,19 @@ export const SignUp = ({ navigation, route }: { navigation: any })  => {
                 {alertSuccess && <Text>{alertSuccess}</Text>}
 
                 <Button style={styles.button} onPress={onSubmit}>
-                    Sign Up
+                    S'inscrire
                 </Button>
+            </View>
+            <Divider style={styles.divider} />
+            <View>
+                <TouchableOpacity
+                    style={styles.returnButton}
+                    onPress={() => navigation.navigate("Inscription")}
+                >
+                    <Text style={styles.returnButtonText} onPress={onReturn}>retour</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    img: {
-        height: 100,
-        width: 100,
-        justifyContent: "center",
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    subtitle: {
-        fontSize: 16,
-        marginBottom: 5,
-        color: '#888',
-        textAlign: 'center',
-    },
-    form: {
-        flex: 1,
-        alignItems: 'center',
-        width: '100%',
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        width: 300,
-        borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: 10,
-        paddingHorizontal: 10,
-        backgroundColor: 'white',
-    },
-    button: {
-        backgroundColor: '#00B561',
-        borderRadius: 10,
-        padding: 15,
-        marginBottom: 10,
-        width: 280,
-        marginTop: 20,
-    },
-    errorText: {
-        color: 'red',
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-});
-
 export default SignUp;
