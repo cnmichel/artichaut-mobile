@@ -116,12 +116,13 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  button: {
+  buttonSave: {
     backgroundColor: "rgb(0, 181, 97)",
     borderRadius: 10,
     border: "none",
-    width: "100%",
+    width: 200,
     marginTop: 20,
     marginBottom: 10,
+    textAlign: 'center',
   },
 });

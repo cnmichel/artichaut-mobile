@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styles } from "../SignIn.syle";
+import { styles } from "../Styles/SignIn.syle";
 import { View, TouchableOpacity, Text, TextInput, Image } from "react-native";
 import { Divider } from "@ui-kitten/components";
 import Auth from "../services/Auth";
