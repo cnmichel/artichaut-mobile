@@ -98,7 +98,7 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
               placeholder="Email"
             />
 
-            <Button style={styles.button} onPress={onSave}>
+            <Button style={styles.buttonSave} onPress={onSave}>
               Enregistrer
             </Button>
           </View>
@@ -124,7 +124,7 @@ export const UserProfile: React.FC<Props> = (props: Props) => {
               placeholder="Confirmation"
               secureTextEntry
             />
-            <Button style={styles.button} onPress={onSave}>
+            <Button style={styles.buttonSave} onPress={onSave}>
               Enregistrer
             </Button>
           </View>
